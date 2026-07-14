@@ -3,9 +3,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
-    const statNumbers = document.querySelectorAll('.stat-number');
     const contactForm = document.getElementById('contactForm');
+    const applicationModal = document.getElementById('applicationModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const closeModalBtn = document.getElementById('closeModal');
+    const applicationForm = document.getElementById('applicationForm');
     
+    let currentInternship = '';
+
     window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {
             navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
@@ -46,48 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
-    const observerOptions = {
-        threshold: 0.5
-    };
-    
-    const statsObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateStats();
-                statsObserver.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-    
-    const aboutSection = document.querySelector('.about');
-    if (aboutSection) {
-        statsObserver.observe(aboutSection);
-    }
-    
-    function animateStats() {
-        statNumbers.forEach(stat => {
-            const target = parseInt(stat.getAttribute('data-target'));
-            const duration = 2000;
-            const increment = target / (duration / 16);
-            let current = 0;
-            
-            const updateCounter = () => {
-                current += increment;
-                if (current < target) {
-                    stat.textContent = Math.floor(current) + '+';
-                    requestAnimationFrame(updateCounter);
-                } else {
-                    stat.textContent = target + '+';
-                }
-            };
-            
-            updateCounter();
-        });
-    }
-    
+
     const sections = document.querySelectorAll('section[id]');
-    
     const highlightNavLink = () => {
         const scrollY = window.scrollY;
         
@@ -106,20 +71,68 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     };
-    
     window.addEventListener('scroll', highlightNavLink);
-    
+
+    // Apply Now Button Handler
     const applyButtons = document.querySelectorAll('.internship-card .btn-outline');
     applyButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
             const card = this.closest('.internship-card');
-            const internshipTitle = card.querySelector('h3').textContent;
-            alert(`Thank you for your interest in the "${internshipTitle}" position! You will be redirected to the application form.`);
-            document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
+            currentInternship = card.querySelector('h3').textContent;
+            modalTitle.textContent = `Apply for ${currentInternship}`;
+            applicationModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         });
     });
-    
+
+    // Close Modal
+    closeModalBtn.addEventListener('click', function() {
+        applicationModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        applicationForm.reset();
+    });
+
+    // Close Modal when clicking outside
+    applicationModal.addEventListener('click', function(e) {
+        if (e.target === applicationModal) {
+            applicationModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            applicationForm.reset();
+        }
+    });
+
+    // Application Form Handler (Backend Simulation with LocalStorage)
+    applicationForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            internship: currentInternship,
+            name: document.getElementById('applicantName').value,
+            email: document.getElementById('applicantEmail').value,
+            phone: document.getElementById('applicantPhone').value,
+            education: document.getElementById('applicantEducation').value,
+            resume: document.getElementById('applicantResume').value,
+            coverLetter: document.getElementById('applicantCoverLetter').value,
+            timestamp: new Date().toISOString()
+        };
+
+        // Simulate Backend - Save to LocalStorage
+        let applications = JSON.parse(localStorage.getItem('nesf_applications') || '[]');
+        applications.push(formData);
+        localStorage.setItem('nesf_applications', JSON.stringify(applications));
+        
+        console.log('Application Submitted:', formData);
+        console.log('Total Applications:', applications.length);
+
+        alert(`Application for "${currentInternship}" submitted successfully! We will review your application and get back to you soon.`);
+
+        applicationModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        applicationForm.reset();
+    });
+
+    // Contact Form Handler (Backend Simulation with LocalStorage)
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -128,18 +141,24 @@ document.addEventListener('DOMContentLoaded', function() {
             email: document.getElementById('email').value,
             phone: document.getElementById('phone').value,
             subject: document.getElementById('subject').value,
-            message: document.getElementById('message').value
+            message: document.getElementById('message').value,
+            timestamp: new Date().toISOString()
         };
+
+        // Simulate Backend - Save to LocalStorage
+        let messages = JSON.parse(localStorage.getItem('nesf_messages') || '[]');
+        messages.push(formData);
+        localStorage.setItem('nesf_messages', JSON.stringify(messages));
         
-        console.log('Form submitted:', formData);
-        
+        console.log('Message Sent:', formData);
+        console.log('Total Messages:', messages.length);
+
         alert('Thank you for your message! We will get back to you soon.');
-        
-        this.reset();
+        contactForm.reset();
     });
-    
+
+    // Fade In Animation for Cards
     const fadeElements = document.querySelectorAll('.program-card, .internship-card, .about-content, .about-image');
-    
     const fadeObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
@@ -150,9 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 fadeObserver.unobserve(entry.target);
             }
         });
-    }, {
-        threshold: 0.1
-    });
+    }, { threshold: 0.1 });
     
     fadeElements.forEach(el => {
         el.style.opacity = '0';
