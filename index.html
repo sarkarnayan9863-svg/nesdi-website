@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>North East Skills Development Institute - Professional Internships</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>NESDI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#programs" class="nav-link">Programs</a></li>
+                <li><a href="#internships" class="nav-link">Internships</a></li>
+                <li><a href="#success-stories" class="nav-link">Success Stories</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <section id="home" class="hero" style="background-image: url('https://picsum.photos/id/1003/1920/1080'); background-size: cover; background-position: center;">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title">North East Skills<br>Development Institute</h1>
+            <p class="hero-subtitle">Empowering Youth Through Professional Internships & Skill Development</p>
+            <div class="hero-buttons">
+                <a href="#internships" class="btn btn-primary">Explore Internships</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">About Us</span>
+                <h2 class="section-title">Building Tomorrow's Leaders Today</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-content">
+                    <h3>Our Mission</h3>
+                    <p>The North East Skills Development Institute (NESDI) is dedicated to bridging the gap between academic excellence and industry requirements. We provide comprehensive skill development programs and professional internships to empower the youth of North East India.</p>
+                    <p>With a focus on practical learning and real-world experience, we prepare students to excel in their chosen careers and become valuable contributors to the workforce.</p>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="5000">0</div>
+                            <div class="stat-label">Students Trained</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="200">0</div>
+                            <div class="stat-label">Partner Companies</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" data-target="95">0</div>
+                            <div class="stat-label">% Placement Rate</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://picsum.photos/id/1005/800/800" alt="Students learning" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="programs" class="programs">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Programs</span>
+                <h2 class="section-title">Skill Development Programs</h2>
+            </div>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <img src="https://picsum.photos/id/1/600/400" alt="Software Development" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 24px;">
+                    <div class="program-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Software Development</h3>
+                    <p>Full-stack web development, mobile app development, and software engineering with industry-standard technologies.</p>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> Web Development</li>
+                        <li><i class="fas fa-check"></i> Mobile Apps</li>
+                        <li><i class="fas fa-check"></i> Cloud Computing</li>
+                    </ul>
+                </div>
+                <div class="program-card">
+                    <img src="https://picsum.photos/id/180/600/400" alt="Data Science" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 24px;">
+                    <div class="program-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Data Science & AI</h3>
+                    <p>Machine learning, data analytics, and artificial intelligence programs designed for the modern data-driven world.</p>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> Machine Learning</li>
+                        <li><i class="fas fa-check"></i> Data Analytics</li>
+                        <li><i class="fas fa-check"></i> Deep Learning</li>
+                    </ul>
+                </div>
+                <div class="program-card">
+                    <img src="https://picsum.photos/id/96/600/400" alt="Digital Design" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 24px;">
+                    <div class="program-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Digital Design</h3>
+                    <p>UI/UX design, graphic design, and digital marketing to create compelling user experiences.</p>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> UI/UX Design</li>
+                        <li><i class="fas fa-check"></i> Graphic Design</li>
+                        <li><i class="fas fa-check"></i> Digital Marketing</li>
+                    </ul>
+                </div>
+                <div class="program-card">
+                    <img src="https://picsum.photos/id/160/600/400" alt="IoT" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 24px;">
+                    <div class="program-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Automation & IoT</h3>
+                    <p>Industrial automation, Internet of Things, and embedded systems for smart technology solutions.</p>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> IoT Development</li>
+                        <li><i class="fas fa-check"></i> Embedded Systems</li>
+                        <li><i class="fas fa-check"></i> Robotics</li>
+                    </ul>
+                </div>
+                <div class="program-card">
+                    <img src="https://picsum.photos/id/48/600/400" alt="Business" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 24px;">
+                    <div class="program-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Business Management</h3>
+                    <p>Entrepreneurship, project management, and business administration for future leaders.</p>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> Entrepreneurship</li>
+                        <li><i class="fas fa-check"></i> Project Management</li>
+                        <li><i class="fas fa-check"></i> Digital Marketing</li>
+                    </ul>
+                </div>
+                <div class="program-card">
+                    <img src="https://picsum.photos/id/60/600/400" alt="Cybersecurity" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 24px;">
+                    <div class="program-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Cybersecurity</h3>
+                    <p>Network security, ethical hacking, and cybersecurity fundamentals to protect digital assets.</p>
+                    <ul class="program-features">
+                        <li><i class="fas fa-check"></i> Ethical Hacking</li>
+                        <li><i class="fas fa-check"></i> Network Security</li>
+                        <li><i class="fas fa-check"></i> Cyber Forensics</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="internships" class="internships">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Internship Opportunities</span>
+                <h2 class="section-title">Start Your Professional Journey</h2>
+            </div>
+            <div class="internships-intro">
+                <p>Gain hands-on experience with our industry partners. Our internship programs provide real-world experience, mentorship, and networking opportunities to kickstart your career.</p>
+            </div>
+            <div class="internships-grid">
+                <div class="internship-card">
+                    <div class="internship-badge">Open</div>
+                    <h3>Frontend Developer Intern</h3>
+                    <div class="internship-company">TechVision Solutions</div>
+                    <div class="internship-details">
+                        <span><i class="fas fa-map-marker-alt"></i> Guwahati</span>
+                        <span><i class="fas fa-clock"></i> 6 Months</span>
+                        <span><i class="fas fa-rupee-sign"></i> Stipend</span>
+                    </div>
+                    <p>Build responsive web applications using React, HTML, CSS, and JavaScript. Work with a team of experienced developers.</p>
+                    <button class="btn btn-outline">Apply Now</button>
+                </div>
+                <div class="internship-card">
+                    <div class="internship-badge">Open</div>
+                    <h3>Data Analyst Intern</h3>
+                    <div class="internship-company">DataInsights Inc.</div>
+                    <div class="internship-details">
+                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                        <span><i class="fas fa-clock"></i> 3 Months</span>
+                        <span><i class="fas fa-rupee-sign"></i> Stipend</span>
+                    </div>
+                    <p>Analyze business data, create visualizations, and derive insights using Python, SQL, and Power BI.</p>
+                    <button class="btn btn-outline">Apply Now</button>
+                </div>
+                <div class="internship-card">
+                    <div class="internship-badge">Open</div>
+                    <h3>UI/UX Design Intern</h3>
+                    <div class="internship-company">Creative Pulse</div>
+                    <div class="internship-details">
+                        <span><i class="fas fa-map-marker-alt"></i> Shillong</span>
+                        <span><i class="fas fa-clock"></i> 4 Months</span>
+                        <span><i class="fas fa-rupee-sign"></i> Stipend</span>
+                    </div>
+                    <p>Design user interfaces, create wireframes, and conduct user research for digital products.</p>
+                    <button class="btn btn-outline">Apply Now</button>
+                </div>
+                <div class="internship-card">
+                    <div class="internship-badge">Open</div>
+                    <h3>Marketing Intern</h3>
+                    <div class="internship-company">GrowthHub Digital</div>
+                    <div class="internship-details">
+                        <span><i class="fas fa-map-marker-alt"></i> Hybrid</span>
+                        <span><i class="fas fa-clock"></i> 3 Months</span>
+                        <span><i class="fas fa-rupee-sign"></i> Stipend</span>
+                    </div>
+                    <p>Manage social media, create content, and assist with digital marketing campaigns.</p>
+                    <button class="btn btn-outline">Apply Now</button>
+                </div>
+                <div class="internship-card">
+                    <div class="internship-badge">Open</div>
+                    <h3>IoT Developer Intern</h3>
+                    <div class="internship-company">SmartTech Systems</div>
+                    <div class="internship-details">
+                        <span><i class="fas fa-map-marker-alt"></i> Guwahati</span>
+                        <span><i class="fas fa-clock"></i> 6 Months</span>
+                        <span><i class="fas fa-rupee-sign"></i> Stipend</span>
+                    </div>
+                    <p>Develop IoT solutions, work with sensors, and build embedded systems applications.</p>
+                    <button class="btn btn-outline">Apply Now</button>
+                </div>
+                <div class="internship-card">
+                    <div class="internship-badge">Open</div>
+                    <h3>Cybersecurity Intern</h3>
+                    <div class="internship-company">SecureNet Labs</div>
+                    <div class="internship-details">
+                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                        <span><i class="fas fa-clock"></i> 4 Months</span>
+                        <span><i class="fas fa-rupee-sign"></i> Stipend</span>
+                    </div>
+                    <p>Learn ethical hacking, vulnerability assessment, and network security practices.</p>
+                    <button class="btn btn-outline">Apply Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="success-stories" class="success-stories">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Student Success Stories</span>
+                <h2 class="section-title">Our Interns Who Made It Big</h2>
+            </div>
+            <div class="success-stories-grid">
+                <div class="success-card">
+                    <div class="success-card-quote" style="color: #3b82f6;">"</div>
+                    <div class="success-card-header">
+                        <img src="https://picsum.photos/id/1005/100/100" alt="Rajesh Sharma" style="border-color: #3b82f6;">
+                        <div>
+                            <h3>Rajesh Sharma</h3>
+                            <p style="color: #3b82f6;">Software Development Intern</p>
+                        </div>
+                    </div>
+                    <div class="success-card-company">
+                        <i class="fas fa-building"></i>
+                        <span>Now at Google, Bangalore</span>
+                    </div>
+                    <div class="success-card-achievements">
+                        <p>"NESDI's internship gave me hands-on experience with React and Node.js. Built 3 real projects and got placed at Google!"</p>
+                    </div>
+                    <div class="success-card-stats">
+                        <div>
+                            <div style="color: #1e3a8a;">3</div>
+                            <div>Projects</div>
+                        </div>
+                        <div>
+                            <div style="color: #1e3a8a;">6</div>
+                            <div>Months</div>
+                        </div>
+                        <div>
+                            <div style="color: #10b981;">100%</div>
+                            <div>Success</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-card">
+                    <div class="success-card-quote" style="color: #10b981;">"</div>
+                    <div class="success-card-header">
+                        <img src="https://picsum.photos/id/1000/100/100" alt="Priya Gogoi" style="border-color: #10b981;">
+                        <div>
+                            <h3>Priya Gogoi</h3>
+                            <p style="color: #10b981;">Data Science Intern</p>
+                        </div>
+                    </div>
+                    <div class="success-card-company">
+                        <i class="fas fa-building"></i>
+                        <span>Now at Amazon, Hyderabad</span>
+                    </div>
+                    <div class="success-card-achievements">
+                        <p>"Learned Python, ML, and built a predictive model. Got PPO from Amazon within 3 months!"</p>
+                    </div>
+                    <div class="success-card-stats">
+                        <div>
+                            <div style="color: #1e3a8a;">2</div>
+                            <div>Models</div>
+                        </div>
+                        <div>
+                            <div style="color: #1e3a8a;">4</div>
+                            <div>Months</div>
+                        </div>
+                        <div>
+                            <div style="color: #f59e0b;">PPO</div>
+                            <div>Offer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-card">
+                    <div class="success-card-quote" style="color: #f59e0b;">"</div>
+                    <div class="success-card-header">
+                        <img src="https://picsum.photos/id/1012/100/100" alt="Amit Das" style="border-color: #f59e0b;">
+                        <div>
+                            <h3>Amit Das</h3>
+                            <p style="color: #f59e0b;">UI/UX Design Intern</p>
+                        </div>
+                    </div>
+                    <div class="success-card-company">
+                        <i class="fas fa-building"></i>
+                        <span>Now at Adobe, Noida</span>
+                    </div>
+                    <div class="success-card-achievements">
+                        <p>"Designed 5+ product interfaces. Portfolio got me hired at Adobe with great package!"</p>
+                    </div>
+                    <div class="success-card-stats">
+                        <div>
+                            <div style="color: #1e3a8a;">5</div>
+                            <div>Projects</div>
+                        </div>
+                        <div>
+                            <div style="color: #1e3a8a;">5</div>
+                            <div>Months</div>
+                        </div>
+                        <div>
+                            <div style="color: #ec4899;">25L</div>
+                            <div>Package</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-card">
+                    <div class="success-card-quote" style="color: #8b5cf6;">"</div>
+                    <div class="success-card-header">
+                        <img src="https://picsum.photos/id/1027/100/100" alt="Sneha Saikia" style="border-color: #8b5cf6;">
+                        <div>
+                            <h3>Sneha Saikia</h3>
+                            <p style="color: #8b5cf6;">Digital Marketing Intern</p>
+                        </div>
+                    </div>
+                    <div class="success-card-company">
+                        <i class="fas fa-building"></i>
+                        <span>Now at Flipkart, Bangalore</span>
+                    </div>
+                    <div class="success-card-achievements">
+                        <p>"Managed campaigns with 100K+ reach. Learned SEO, SEM, social media marketing."</p>
+                    </div>
+                    <div class="success-card-stats">
+                        <div>
+                            <div style="color: #1e3a8a;">12</div>
+                            <div>Campaigns</div>
+                        </div>
+                        <div>
+                            <div style="color: #1e3a8a;">3</div>
+                            <div>Months</div>
+                        </div>
+                        <div>
+                            <div style="color: #10b981;">100K+</div>
+                            <div>Reach</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-card">
+                    <div class="success-card-quote" style="color: #06b6d4;">"</div>
+                    <div class="success-card-header">
+                        <img src="https://picsum.photos/id/1074/100/100" alt="Vikram Borah" style="border-color: #06b6d4;">
+                        <div>
+                            <h3>Vikram Borah</h3>
+                            <p style="color: #06b6d4;">IoT Intern</p>
+                        </div>
+                    </div>
+                    <div class="success-card-company">
+                        <i class="fas fa-building"></i>
+                        <span>Now at Siemens, Mumbai</span>
+                    </div>
+                    <div class="success-card-achievements">
+                        <p>"Built smart home automation system. Worked on industrial IoT projects at Siemens!"</p>
+                    </div>
+                    <div class="success-card-stats">
+                        <div>
+                            <div style="color: #1e3a8a;">3</div>
+                            <div>Systems</div>
+                        </div>
+                        <div>
+                            <div style="color: #1e3a8a;">6</div>
+                            <div>Months</div>
+                        </div>
+                        <div>
+                            <div style="color: #1e3a8a;">1</div>
+                            <div>Patent</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-card">
+                    <div class="success-card-quote" style="color: #ef4444;">"</div>
+                    <div class="success-card-header">
+                        <img src="https://picsum.photos/id/1062/100/100" alt="Ananya Kalita" style="border-color: #ef4444;">
+                        <div>
+                            <h3>Ananya Kalita</h3>
+                            <p style="color: #ef4444;">Cybersecurity Intern</p>
+                        </div>
+                    </div>
+                    <div class="success-card-company">
+                        <i class="fas fa-building"></i>
+                        <span>Now at Deloitte, Gurgaon</span>
+                    </div>
+                    <div class="success-card-achievements">
+                        <p>"Learned ethical hacking and vulnerability assessment. Got 3 job offers!"</p>
+                    </div>
+                    <div class="success-card-stats">
+                        <div>
+                            <div style="color: #1e3a8a;">15+</div>
+                            <div>CTFs</div>
+                        </div>
+                        <div>
+                            <div style="color: #1e3a8a;">4</div>
+                            <div>Months</div>
+                        </div>
+                        <div>
+                            <div style="color: #10b981;">3</div>
+                            <div>Offers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Get In Touch</span>
+                <h2 class="section-title">Let's Connect</h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Address</h4>
+                            <p>GS Road, Dispur, Guwahati,<br>Assam 781006, India</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+91 361 234 5678</p>
+                            <p>+91 98765 43210</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@nesdi.edu.in</p>
+                            <p>internships@nesdi.edu.in</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Select an option</option>
+                                <option value="internship">Internship Inquiry</option>
+                                <option value="program">Program Information</option>
+                                <option value="partnership">Partnership Opportunity</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-brand">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>NESDI</span>
+                    </div>
+                    <p>Empowering the youth of North East India through quality education, skill development, and professional internship opportunities.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#internships">Internships</a></li>
+                        <li><a href="#success-stories">Success Stories</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Programs</h4>
+                    <ul>
+                        <li><a href="#">Software Development</a></li>
+                        <li><a href="#">Data Science & AI</a></li>
+                        <li><a href="#">Digital Design</a></li>
+                        <li><a href="#">Cybersecurity</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 North East Skills Development Institute. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
