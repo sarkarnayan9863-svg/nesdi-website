@@ -15,6 +15,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const messagesList = document.getElementById('messagesList');
     
     let currentInternship = '';
+    let secretCode = '';
+    const targetSecretCode = 'nesf';
+
+    // Secret code listener to show admin button
+    document.addEventListener('keydown', function(e) {
+        secretCode += e.key.toLowerCase();
+        // Keep only the last N characters where N is length of target code
+        secretCode = secretCode.slice(-targetSecretCode.length);
+        
+        if (secretCode === targetSecretCode) {
+            viewApplicationsBtn.style.display = 'block';
+            secretCode = ''; // Reset the code
+            alert('Admin mode activated! Scroll to footer to see the button.');
+        }
+    });
 
     window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {
