@@ -14,6 +14,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const applicationsList = document.getElementById('applicationsList');
     const messagesList = document.getElementById('messagesList');
     
+    // Feedback selectors
+    const feedbackModal = document.getElementById('feedbackModal');
+    const openFeedbackBtn = document.getElementById('openFeedbackBtn');
+    const closeFeedbackModalBtn = document.getElementById('closeFeedbackModal');
+    const feedbackForm = document.getElementById('feedbackForm');
+    const feedbacksList = document.getElementById('feedbacksList');
+    
     let currentInternship = '';
     let secretCode = '';
     const targetSecretCode = 'nesf';
@@ -174,6 +181,65 @@ document.addEventListener('DOMContentLoaded', function() {
         contactForm.reset();
     });
 
+    // Open Feedback Modal
+    if (openFeedbackBtn) {
+        openFeedbackBtn.addEventListener('click', function() {
+            feedbackModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+    }
+
+    // Close Feedback Modal
+    if (closeFeedbackModalBtn) {
+        closeFeedbackModalBtn.addEventListener('click', function() {
+            feedbackModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            feedbackForm.reset();
+        });
+    }
+
+    if (feedbackModal) {
+        feedbackModal.addEventListener('click', function(e) {
+            if (e.target === feedbackModal) {
+                feedbackModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                feedbackForm.reset();
+            }
+        });
+    }
+
+    // Feedback Form Handler
+    if (feedbackForm) {
+        feedbackForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('feedbackStudentName').value,
+                course: document.getElementById('feedbackCourse').value,
+                internship: document.getElementById('feedbackInternship').value,
+                duration: document.getElementById('feedbackDuration').value,
+                rating: document.getElementById('feedbackRating').value,
+                text: document.getElementById('feedbackText').value,
+                drawbacks: document.getElementById('feedbackDrawbacks').value,
+                avatar: document.getElementById('feedbackAvatar').value || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&q=80',
+                timestamp: new Date().toISOString()
+            };
+
+            let feedbacks = JSON.parse(localStorage.getItem('nesf_feedbacks') || '[]');
+            feedbacks.push(formData);
+            localStorage.setItem('nesf_feedbacks', JSON.stringify(feedbacks));
+            
+            console.log('Feedback Submitted:', formData);
+            alert('Thank you for sharing your feedback and suggestions! Your experience helps us grow.');
+
+            feedbackModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            feedbackForm.reset();
+            
+            loadDynamicTestimonials();
+        });
+    }
+
     // View Applications (Admin) Button Handler
     viewApplicationsBtn.addEventListener('click', function() {
         // Optional: Add simple password protection
@@ -236,10 +302,99 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `).join('');
         }
+
+        // Render Feedbacks
+        const feedbacks = JSON.parse(localStorage.getItem('nesf_feedbacks') || '[]');
+        if (feedbacks.length === 0) {
+            feedbacksList.innerHTML = '<p style="color: #6b7280; font-size: 16px;">No student feedbacks submitted yet!</p>';
+        } else {
+            feedbacksList.innerHTML = feedbacks.reverse().map(fb => `
+                <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border-left: 4px solid #f59e0b; display: flex; flex-direction: column; gap: 6px;">
+                    <h4 style="font-size: 18px; margin-bottom: 4px; color: #0f172a;">${fb.name} - ${fb.course}</h4>
+                    <p style="margin-bottom: 0;"><strong>Placement:</strong> ${fb.internship} (${fb.duration})</p>
+                    <p style="margin-bottom: 0;"><strong>Rating:</strong> ${'⭐'.repeat(parseInt(fb.rating))}</p>
+                    <p style="margin-bottom: 0; color: #1e3a8a; background: rgba(59, 130, 246, 0.05); padding: 8px 12px; border-radius: 6px;"><strong>What went well:</strong> ${fb.text}</p>
+                    <p style="margin-bottom: 0; color: #dc2626; background: rgba(220, 38, 38, 0.05); padding: 8px 12px; border-radius: 6px;"><strong>Kya kami/Suggestions:</strong> ${fb.drawbacks}</p>
+                    <p style="margin-top: 4px; font-size: 11px; color: #6b7280;">Submitted on: ${new Date(fb.timestamp).toLocaleString()}</p>
+                </div>
+            `).join('');
+        }
+    }
+
+    // Function to load dynamic testimonials from localStorage
+    function loadDynamicTestimonials() {
+        const feedbacks = JSON.parse(localStorage.getItem('nesf_feedbacks') || '[]');
+        if (feedbacks.length === 0) return;
+        
+        const successGrid = document.querySelector('.success-stories-grid');
+        if (!successGrid) return;
+        
+        // Clear previously added dynamic cards to prevent duplication
+        const existingDynamic = successGrid.querySelectorAll('.dynamic-card');
+        existingDynamic.forEach(el => el.remove());
+
+        // Prepend new feedbacks
+        feedbacks.reverse().forEach((fb) => {
+            const card = document.createElement('div');
+            card.className = 'success-card dynamic-card';
+            
+            // Create rating stars
+            let stars = '';
+            const ratingNum = parseInt(fb.rating) || 5;
+            for (let i = 0; i < 5; i++) {
+                if (i < ratingNum) {
+                    stars += '<i class="fas fa-star" style="color: var(--accent-color); margin-right: 2px;"></i>';
+                } else {
+                    stars += '<i class="far fa-star" style="color: var(--border-color); margin-right: 2px;"></i>';
+                }
+            }
+
+            card.innerHTML = `
+                <div class="success-card-quote">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+                <div class="success-card-header">
+                    <img src="${fb.avatar}" alt="${fb.name}">
+                    <div>
+                        <h3>${fb.name}</h3>
+                        <p style="color: var(--primary-light); font-weight: 600;">${fb.course} Graduate</p>
+                        <div style="font-size: 11px; margin-top: 4px; display: flex; gap: 2px;">${stars}</div>
+                    </div>
+                </div>
+                <div class="success-card-company">
+                    <i class="fas fa-briefcase"></i> Placement: ${fb.internship}
+                </div>
+                <div class="success-card-achievements" style="display: flex; flex-direction: column; gap: 8px;">
+                    <p style="color: var(--text-dark); font-weight: 500; font-style: normal; line-height: 1.6;">"${fb.text}"</p>
+                    <p style="font-size: 13px; color: #dc2626; font-style: normal; background: rgba(220, 38, 38, 0.05); padding: 8px 12px; border-radius: 6px;"><strong style="color: var(--text-dark);">Kami / Suggestions:</strong> "${fb.drawbacks}"</p>
+                </div>
+                <div class="success-card-stats" style="margin-top: 12px; border-top: 1px solid var(--border-color); padding-top: 12px;">
+                    <div>
+                        <div style="color: var(--primary-color); font-weight: 800; font-size: 20px;">${fb.duration}</div>
+                        <div>Duration</div>
+                    </div>
+                    <div>
+                        <div style="color: var(--secondary-color); font-weight: 800; font-size: 20px;">Feedback</div>
+                        <div>Type</div>
+                    </div>
+                </div>
+            `;
+            
+            // Prepend to the grid
+            successGrid.insertBefore(card, successGrid.firstChild);
+            
+            // Observe the new element for fade-in animation
+            if (typeof fadeObserver !== 'undefined' && fadeObserver) {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                fadeObserver.observe(card);
+            }
+        });
     }
 
     // Fade In Animation for Cards
-    const fadeElements = document.querySelectorAll('.program-card, .internship-card, .about-content, .about-image');
+    const fadeElements = document.querySelectorAll('.program-card, .internship-card, .about-content, .about-image, .success-card');
     const fadeObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
@@ -258,4 +413,58 @@ document.addEventListener('DOMContentLoaded', function() {
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         fadeObserver.observe(el);
     });
+
+    // Call dynamic testimonials load on startup (after fadeObserver is declared)
+    loadDynamicTestimonials();
+
+    // Course Search Bar Functionality
+    const courseSearchInput = document.getElementById('courseSearchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const searchNoResults = document.getElementById('searchNoResults');
+    const programCards = document.querySelectorAll('.program-card');
+
+    if (courseSearchInput) {
+        courseSearchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            
+            // Show/hide clear button
+            if (query.length > 0) {
+                clearSearchBtn.style.display = 'block';
+            } else {
+                clearSearchBtn.style.display = 'none';
+            }
+
+            let visibleCount = 0;
+
+            programCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const desc = card.querySelector('p').textContent.toLowerCase();
+                const features = Array.from(card.querySelectorAll('.program-features li'))
+                                     .map(li => li.textContent.toLowerCase())
+                                     .join(' ');
+
+                if (title.includes(query) || desc.includes(query) || features.includes(query)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show no results message if count is 0
+            if (visibleCount === 0) {
+                searchNoResults.style.display = 'block';
+            } else {
+                searchNoResults.style.display = 'none';
+            }
+        });
+    }
+
+    if (clearSearchBtn) {
+        clearSearchBtn.addEventListener('click', function() {
+            courseSearchInput.value = '';
+            // Trigger input event to update list
+            courseSearchInput.dispatchEvent(new Event('input'));
+        });
+    }
 });

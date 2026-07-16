@@ -5,22 +5,23 @@
 }
 
 :root {
-    --primary-color: #0f172a;
-    --primary-light: #1e3a8a;
-    --primary-dark: #030712;
-    --secondary-color: #059669;
+    --primary-color: #1e3a8a; /* Premium Royal Blue */
+    --primary-light: #3b82f6; /* Vibrant Blue */
+    --primary-dark: #0f1e4f;  /* Deep Navy */
+    --secondary-color: #0d9488; /* Teal Accent */
     --accent-color: #f59e0b;
-    --text-dark: #1f2937;
-    --text-light: #6b7280;
+    --text-dark: #0f172a;     /* Very dark blue-gray */
+    --text-light: #475569;    /* Slate light text */
     --text-white: #ffffff;
-    --bg-light: #f9fafb;
+    --bg-light: #f8fafc;      /* Soft blue-gray light background */
     --bg-white: #ffffff;
-    --border-color: #e5e7eb;
+    --border-color: #e2e8f0;
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
+    --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(30, 58, 138, 0.1), 0 4px 6px -4px rgba(30, 58, 138, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(30, 58, 138, 0.15), 0 8px 10px -6px rgba(30, 58, 138, 0.15);
+    --shadow-premium: 0 20px 40px -15px rgba(30, 58, 138, 0.12);
+    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html {
@@ -32,6 +33,27 @@ body {
     line-height: 1.6;
     color: var(--text-dark);
     background-color: var(--bg-white);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', 'Inter', sans-serif;
+    font-weight: 700;
+}
+
+/* Custom Premium Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-light);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+    border: 2px solid var(--bg-light);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-light);
 }
 
 .container {
@@ -46,9 +68,11 @@ body {
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     box-shadow: var(--shadow-sm);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
     transition: var(--transition);
 }
 
@@ -145,7 +169,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(180deg, rgba(30, 58, 138, 0.3) 0%, transparent 100%);
+    background: linear-gradient(135deg, rgba(15, 30, 79, 0.85) 0%, rgba(30, 58, 138, 0.7) 100%);
 }
 
 .hero-content {
@@ -274,6 +298,7 @@ section {
     letter-spacing: 1px;
     border-radius: 50px;
     margin-bottom: 16px;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.25);
 }
 
 .section-title {
@@ -281,6 +306,7 @@ section {
     font-weight: 800;
     color: var(--text-dark);
     line-height: 1.2;
+    letter-spacing: -0.02em;
 }
 
 .about {
@@ -729,23 +755,29 @@ section {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
-    border: 2px solid transparent;
+    border: 1px solid var(--border-color);
 }
 
 .success-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-xl);
-    border-color: var(--primary-color);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-premium);
+    border-color: var(--primary-light);
 }
 
 .success-card-quote {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 60px;
-    opacity: 0.1;
-    font-family: Georgia, serif;
+    top: 24px;
+    right: 24px;
+    font-size: 32px;
+    opacity: 0.15;
+    color: var(--primary-color);
     line-height: 1;
+    transition: var(--transition);
+}
+
+.success-card:hover .success-card-quote {
+    opacity: 0.3;
+    transform: scale(1.1) rotate(-10deg);
 }
 
 .success-card-header {
@@ -760,7 +792,13 @@ section {
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid;
+    border: 3px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.success-card:hover .success-card-header img {
+    border-color: var(--primary-light);
+    transform: scale(1.05);
 }
 
 .success-card-header h3 {
@@ -773,6 +811,7 @@ section {
 .success-card-header p {
     font-weight: 600;
     font-size: 14px;
+    color: var(--primary-color);
 }
 
 .success-card-company {
@@ -876,4 +915,14 @@ section {
     .footer-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Search Bar Styles */
+.search-container input:focus {
+    border-color: var(--primary-light) !important;
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.15) !important;
+}
+
+#clearSearchBtn:hover {
+    color: var(--primary-color) !important;
 }
