@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeAdminModalBtn = document.getElementById('closeAdminModal');
     const applicationsList = document.getElementById('applicationsList');
     const messagesList = document.getElementById('messagesList');
+    const detailsModal = document.getElementById('detailsModal');
+    const detailsModalTitle = document.getElementById('detailsModalTitle');
+    const detailsModalBody = document.getElementById('detailsModalBody');
+    const closeDetailsModalBtn = document.getElementById('closeDetailsModal');
+    const clickableCards = document.querySelectorAll('.clickable-card');
     
     // Feedback selectors
     const feedbackModal = document.getElementById('feedbackModal');
@@ -465,6 +470,84 @@ document.addEventListener('DOMContentLoaded', function() {
             courseSearchInput.value = '';
             // Trigger input event to update list
             courseSearchInput.dispatchEvent(new Event('input'));
+        });
+    }
+
+    // Details Modal Functionality
+    clickableCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Allow Learn More button on program cards to open modal
+            // But if it's Apply Now on internship cards, open application modal instead
+            if (e.target.closest('.btn')) {
+                const btn = e.target.closest('.btn');
+                if (btn.textContent.includes('Apply')) {
+                    return; // Let the existing Apply Now handler take over
+                }
+                // Otherwise, continue to open details modal for Learn More
+            }
+
+            const title = this.getAttribute('data-title');
+            const description = this.getAttribute('data-description');
+            const features = this.getAttribute('data-features');
+            const company = this.getAttribute('data-company');
+            const location = this.getAttribute('data-location');
+            const duration = this.getAttribute('data-duration');
+
+            let bodyContent = '';
+            let subheaderContent = '';
+
+            // Build subheader
+            if (company) {
+                subheaderContent += `<span class="modal-tag"><i class="fas fa-building"></i> ${company}</span>`;
+            }
+            if (location) {
+                subheaderContent += `<span class="modal-tag"><i class="fas fa-map-marker-alt"></i> ${location}</span>`;
+            }
+            if (duration) {
+                subheaderContent += `<span class="modal-tag"><i class="fas fa-clock"></i> ${duration}</span>`;
+            }
+
+            // Build main body
+            bodyContent += `<p style="font-size: 17px; margin-bottom: 24px; line-height: 1.9;">${description}</p>`;
+
+            if (features) {
+                const featuresList = features.split(', ');
+                bodyContent += `
+                    <h4><i class="fas fa-check-circle"></i> What You'll Learn</h4>
+                    <ul>
+                        ${featuresList.map(feature => `<li>${feature}</li>`).join('')}
+                    </ul>
+                `;
+            }
+
+            // Combine everything
+            let fullContent = '';
+            if (subheaderContent) {
+                fullContent += `<div class="modal-subheader">${subheaderContent}</div>`;
+            }
+            fullContent += bodyContent;
+
+            detailsModalTitle.textContent = title;
+            detailsModalBody.innerHTML = fullContent;
+            detailsModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // Close Details Modal
+    if (closeDetailsModalBtn) {
+        closeDetailsModalBtn.addEventListener('click', function() {
+            detailsModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+    }
+
+    if (detailsModal) {
+        detailsModal.addEventListener('click', function(e) {
+            if (e.target === detailsModal) {
+                detailsModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
         });
     }
 });
