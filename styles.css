@@ -1629,6 +1629,7 @@ section {
     .nav-logo { height: 36px; width: 36px; }
 
     /* Hero */
+    .hero { min-height: auto; }
     .hero-title { font-size: 40px; letter-spacing: -0.5px; }
     .hero-title-highlight { font-size: 44px !important; letter-spacing: -0.5px; }
     .hero-subtitle { font-size: 16px; margin-bottom: 24px; }
@@ -1839,6 +1840,7 @@ section {
     .container { padding: 0 14px; }
     .nav-brand span { font-size: 16px; }
     .nav-logo { height: 32px; width: 32px; }
+    .hero { min-height: auto; }
     .hero-title { font-size: 28px; }
     .hero-title-highlight { font-size: 32px !important; }
     .hero-subtitle { font-size: 14px; }
