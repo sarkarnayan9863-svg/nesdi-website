@@ -375,29 +375,24 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 900;
 }
 
-.hero-word-white {
+.hero-word-north-static {
     color: #ffffff;
 }
 
+.hero-word-east-static {
+    color: #fbbf24;
+}
+
 .hero-word-skill-static {
-    background: linear-gradient(135deg, #ffe066 0%, #fbbf24 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
+    color: #38bdf8;
 }
 
 .hero-word-foundation-static {
-    background: linear-gradient(135deg, #38bdf8 0%, #a78bfa 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
+    color: #c084fc;
 }
 
 .hero-word-nesf-static {
-    color: rgba(255, 255, 255, 0.85);
-    display: inline-block;
+    color: #e2e8f0;
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
