@@ -296,8 +296,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 @media (max-width: 768px) {
     .hero-side-img {
-        display: none;
+        width: 140px;
+        height: 180px;
+        opacity: 0.15;
     }
+    .hero-img-left { left: -30px; }
+    .hero-img-right { right: -30px; }
 }
 
 
@@ -1625,9 +1629,9 @@ section {
     .nav-logo { height: 36px; width: 36px; }
 
     /* Hero */
-    .hero-title { font-size: 32px; letter-spacing: -0.5px; }
-    .hero-title-highlight { font-size: 36px !important; letter-spacing: -0.5px; }
-    .hero-subtitle { font-size: 14px; margin-bottom: 24px; }
+    .hero-title { font-size: 40px; letter-spacing: -0.5px; }
+    .hero-title-highlight { font-size: 44px !important; letter-spacing: -0.5px; }
+    .hero-subtitle { font-size: 16px; margin-bottom: 24px; }
     .hero-buttons { flex-direction: column; align-items: center; gap: 10px; }
     .hero-buttons .btn { width: 100%; max-width: 280px; padding: 12px 24px; font-size: 14px; }
     .hero-content { padding: 100px 16px 60px; }
@@ -1835,9 +1839,9 @@ section {
     .container { padding: 0 14px; }
     .nav-brand span { font-size: 16px; }
     .nav-logo { height: 32px; width: 32px; }
-    .hero-title { font-size: 22px; }
-    .hero-title-highlight { font-size: 26px !important; }
-    .hero-subtitle { font-size: 12px; }
+    .hero-title { font-size: 28px; }
+    .hero-title-highlight { font-size: 32px !important; }
+    .hero-subtitle { font-size: 14px; }
     .hero-buttons .btn { font-size: 13px; padding: 11px 18px; }
     .hero-content { padding: 90px 14px 50px; }
     .section-title { font-size: 18px; }
