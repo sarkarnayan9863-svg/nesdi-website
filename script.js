@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const adminModal = document.getElementById('adminModal');
     const closeAdminModalBtn = document.getElementById('closeAdminModal');
     const messagesList = document.getElementById('messagesList');
+    const collabsList = document.getElementById('collabsList');
     const detailsModal = document.getElementById('detailsModal');
     const detailsModalTitle = document.getElementById('detailsModalTitle');
     const detailsModalBody = document.getElementById('detailsModalBody');
@@ -31,9 +32,19 @@ document.addEventListener('DOMContentLoaded', function() {
         secretCode = secretCode.slice(-targetSecretCode.length);
         
         if (secretCode === targetSecretCode) {
-            viewApplicationsBtn.style.display = 'block';
             secretCode = ''; // Reset the code
-            alert('Admin mode activated! Scroll to footer to see the button.');
+            const pwd = prompt("Enter Admin Password:");
+            if (pwd === 'nesf') {
+                localStorage.setItem('nesf_admin_token', pwd);
+                viewApplicationsBtn.style.display = 'block';
+                document.body.classList.add('admin-mode-active');
+                alert('Admin mode activated! Scroll to footer to see the button.');
+                if (adminModal && adminModal.style.display === 'flex') {
+                    renderAdminData();
+                }
+            } else {
+                alert("Incorrect password!");
+            }
         }
     });
 
@@ -102,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // Contact Form Handler
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const formData = {
@@ -114,21 +125,25 @@ document.addEventListener('DOMContentLoaded', function() {
             timestamp: new Date().toISOString()
         };
 
-        let messages = JSON.parse(localStorage.getItem('nesf_messages') || '[]');
-        messages.push(formData);
-        localStorage.setItem('nesf_messages', JSON.stringify(messages));
-        
-        console.log('Message Sent:', formData);
-        console.log('Total Messages:', messages.length);
-
-        alert('Thank you for your message! We will get back to you soon.');
-        contactForm.reset();
+        try {
+            const res = await fetch('http://localhost:3000/api/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            if (!res.ok) throw new Error('Network error');
+            alert('Thank you for reaching out! We will get back to you soon.');
+            contactForm.reset();
+        } catch (err) {
+            alert('Error submitting message. Please try again later.');
+            console.error(err);
+        }
     });
 
     // Collaboration Form Handler
     const collaborationForm = document.getElementById('collaborationForm');
     if (collaborationForm) {
-        collaborationForm.addEventListener('submit', function(e) {
+        collaborationForm.addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const collabData = {
@@ -140,12 +155,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 timestamp: new Date().toISOString()
             };
 
-            let collabs = JSON.parse(localStorage.getItem('nesf_collaborations') || '[]');
-            collabs.push(collabData);
-            localStorage.setItem('nesf_collaborations', JSON.stringify(collabs));
-
-            alert('Thank you for your collaboration request! Our team will reach out to you shortly.');
-            collaborationForm.reset();
+            try {
+                const res = await fetch('http://localhost:3000/api/collaborations', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(collabData)
+                });
+                if (!res.ok) throw new Error('Network error');
+                alert('Thank you for your collaboration request! Our team will reach out to you shortly.');
+                collaborationForm.reset();
+            } catch (err) {
+                alert('Error submitting request.');
+                console.error(err);
+            }
         });
     }
 
@@ -333,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Feedback Form Handler
     if (feedbackForm) {
-        feedbackForm.addEventListener('submit', function(e) {
+        feedbackForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const formData = {
@@ -348,154 +370,168 @@ document.addEventListener('DOMContentLoaded', function() {
                 timestamp: new Date().toISOString()
             };
 
-            let feedbacks = JSON.parse(localStorage.getItem('nesf_feedbacks') || '[]');
-            feedbacks.push(formData);
-            localStorage.setItem('nesf_feedbacks', JSON.stringify(feedbacks));
-            
-            console.log('Feedback Submitted:', formData);
-            alert('Thank you for sharing your feedback and suggestions! Your experience helps us grow.');
-
-            feedbackModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            feedbackForm.reset();
-            
-            loadDynamicTestimonials();
+            try {
+                const res = await fetch('http://localhost:3000/api/feedbacks', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                if (!res.ok) throw new Error('Network error');
+                
+                alert('Thank you for sharing your feedback and suggestions! Your experience helps us grow.');
+                feedbackModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                feedbackForm.reset();
+                if (adminModal && adminModal.style.display === 'flex') {
+                    renderAdminData();
+                }
+            } catch (err) {
+                alert('Error submitting feedback.');
+                console.error(err);
+            }
         });
     }
 
     // View Applications (Admin) Button Handler
     viewApplicationsBtn.addEventListener('click', function() {
-        // Optional: Add simple password protection
-        const password = prompt("Enter Admin Password to view applications (default: nesf@123):");
-        if (password === "nesf@123" || password === null) {
-            renderAdminData();
+        // Now using token from local storage that was set when typing secret code
+        const token = localStorage.getItem('nesf_admin_token');
+        if (token) {
             adminModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+            renderAdminData();
         } else {
-            alert("Incorrect password!");
+            alert("Not authorized. Please type secret code again.");
         }
     });
 
-    // Close Admin Modal
     closeAdminModalBtn.addEventListener('click', function() {
         adminModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
     });
 
-    adminModal.addEventListener('click', function(e) {
-        if (e.target === adminModal) {
+    // Close admin modal on outside click
+    window.addEventListener('click', function(e) {
+        if (e.target == adminModal) {
             adminModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
         }
     });
 
-    // Function to render applications and messages in admin modal
-    function renderAdminData() {
-        const messages = JSON.parse(localStorage.getItem('nesf_messages') || '[]');
+    // Function to render admin data
+    async function renderAdminData() {
+        const token = localStorage.getItem('nesf_admin_token');
+        if (!token) return;
 
-        // Render Messages
-        if (messages.length === 0) {
-            messagesList.innerHTML = '<p style="color: #6b7280; font-size: 16px;">No messages received yet!</p>';
-        } else {
-            messagesList.innerHTML = messages.reverse().map(msg => `
-                <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border-left: 4px solid #059669;">
-                    <h4 style="font-size: 18px; margin-bottom: 8px; color: #0f172a;">${msg.name} - ${msg.subject || 'General Inquiry'}</h4>
-                    <p style="margin-bottom: 4px;"><strong>Email:</strong> ${msg.email}</p>
-                    ${msg.phone ? `<p style="margin-bottom: 4px;"><strong>Phone:</strong> ${msg.phone}</p>` : ''}
-                    <p style="margin-top: 8px; margin-bottom: 4px;"><strong>Message:</strong> ${msg.message}</p>
-                    <p style="margin-top: 8px; font-size: 12px; color: #6b7280;">Received on: ${new Date(msg.timestamp).toLocaleString()}</p>
-                </div>
-            `).join('');
-        }
+        try {
+            const res = await fetch('http://localhost:3000/api/admin/data', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+            
+            if (!res.ok) {
+                if (res.status === 401) {
+                    alert('Session expired or unauthorized. Please re-enter admin mode.');
+                    localStorage.removeItem('nesf_admin_token');
+                    viewApplicationsBtn.style.display = 'none';
+                    document.body.classList.remove('admin-mode-active');
+                    adminModal.style.display = 'none';
+                }
+                return;
+            }
 
-        // Render Feedbacks
-        const feedbacks = JSON.parse(localStorage.getItem('nesf_feedbacks') || '[]');
-        if (feedbacks.length === 0) {
-            feedbacksList.innerHTML = '<p style="color: #6b7280; font-size: 16px;">No student feedbacks submitted yet!</p>';
-        } else {
-            feedbacksList.innerHTML = feedbacks.reverse().map(fb => `
-                <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border-left: 4px solid #f59e0b; display: flex; flex-direction: column; gap: 6px;">
-                    <h4 style="font-size: 18px; margin-bottom: 4px; color: #0f172a;">${fb.name} - ${fb.course}</h4>
-                    <p style="margin-bottom: 0;"><strong>Placement:</strong> ${fb.internship} (${fb.duration})</p>
-                    <p style="margin-bottom: 0;"><strong>Rating:</strong> ${'⭐'.repeat(parseInt(fb.rating))}</p>
-                    <p style="margin-bottom: 0; color: #1e3a8a; background: rgba(59, 130, 246, 0.05); padding: 8px 12px; border-radius: 6px;"><strong>What went well:</strong> ${fb.text}</p>
-                    <p style="margin-bottom: 0; color: #dc2626; background: rgba(220, 38, 38, 0.05); padding: 8px 12px; border-radius: 6px;"><strong>Kya kami/Suggestions:</strong> ${fb.drawbacks}</p>
-                    <p style="margin-top: 4px; font-size: 11px; color: #6b7280;">Submitted on: ${new Date(fb.timestamp).toLocaleString()}</p>
-                </div>
-            `).join('');
+            const data = await res.json();
+            const { messages, collaborations, feedbacks } = data;
+
+            // Render Messages
+            if (messages.length === 0) {
+                messagesList.innerHTML = '<p style="color: #6b7280; font-size: 16px;">No messages received yet!</p>';
+            } else {
+                messagesList.innerHTML = messages.reverse().map(msg => `
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border-left: 4px solid #059669; position: relative;">
+                        <button onclick="deleteAdminMessage(${msg.id})" style="position: absolute; top: 16px; right: 16px; background: #fee2e2; color: #dc2626; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;">Delete</button>
+                        <h4 style="font-size: 18px; margin-bottom: 8px; color: #0f172a; padding-right: 70px;">${msg.name} - ${msg.subject || 'General Inquiry'}</h4>
+                        <p style="margin-bottom: 4px;"><strong>Email:</strong> ${msg.email}</p>
+                        ${msg.phone ? `<p style="margin-bottom: 4px;"><strong>Phone:</strong> ${msg.phone}</p>` : ''}
+                        <p style="margin-top: 8px; margin-bottom: 4px;"><strong>Message:</strong> ${msg.message}</p>
+                        <p style="margin-top: 8px; font-size: 12px; color: #6b7280;">Received on: ${new Date(msg.timestamp).toLocaleString()}</p>
+                    </div>
+                `).join('');
+            }
+
+            // Render Collaborations
+            if (collaborations.length === 0) {
+                collabsList.innerHTML = '<p style="color: #6b7280; font-size: 16px;">No collaboration requests received yet!</p>';
+            } else {
+                collabsList.innerHTML = collaborations.reverse().map(collab => `
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border-left: 4px solid #3b82f6; position: relative;">
+                        <button onclick="deleteAdminCollab(${collab.id})" style="position: absolute; top: 16px; right: 16px; background: #fee2e2; color: #dc2626; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;">Delete</button>
+                        <h4 style="font-size: 18px; margin-bottom: 8px; color: #0f172a; padding-right: 70px;">${collab.orgName}</h4>
+                        <p style="margin-bottom: 4px;"><strong>Partner Type:</strong> ${collab.type}</p>
+                        <p style="margin-bottom: 4px;"><strong>Email:</strong> ${collab.email}</p>
+                        ${collab.phone ? `<p style="margin-bottom: 4px;"><strong>Phone:</strong> ${collab.phone}</p>` : ''}
+                        <p style="margin-top: 8px; margin-bottom: 4px;"><strong>Message/Proposal:</strong> ${collab.message}</p>
+                        <p style="margin-top: 8px; font-size: 12px; color: #6b7280;">Received on: ${new Date(collab.timestamp).toLocaleString()}</p>
+                    </div>
+                `).join('');
+            }
+
+            // Render Feedbacks
+            if (feedbacks.length === 0) {
+                feedbacksList.innerHTML = '<p style="color: #6b7280; font-size: 16px;">No student feedbacks submitted yet!</p>';
+            } else {
+                feedbacksList.innerHTML = feedbacks.reverse().map(fb => `
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border-left: 4px solid #f59e0b; display: flex; flex-direction: column; gap: 6px; position: relative;">
+                        <button onclick="deleteAdminFeedback(${fb.id})" style="position: absolute; top: 16px; right: 16px; background: #fee2e2; color: #dc2626; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600;">Delete</button>
+                        <h4 style="font-size: 18px; margin-bottom: 4px; color: #0f172a; padding-right: 70px;">${fb.name} - ${fb.course}</h4>
+                        <p style="margin-bottom: 0;"><strong>Placement:</strong> ${fb.internship || 'N/A'} (${fb.duration})</p>
+                        <p style="margin-bottom: 0;"><strong>Rating:</strong> ${'⭐'.repeat(parseInt(fb.rating))}</p>
+                        <p style="margin-bottom: 0; color: #1e3a8a; background: rgba(59, 130, 246, 0.05); padding: 8px 12px; border-radius: 6px;"><strong>What went well:</strong> ${fb.text}</p>
+                        <p style="margin-bottom: 0; color: #dc2626; background: rgba(220, 38, 38, 0.05); padding: 8px 12px; border-radius: 6px;"><strong>Kya kami/Suggestions:</strong> ${fb.drawbacks}</p>
+                        <p style="margin-top: 4px; font-size: 11px; color: #6b7280;">Submitted on: ${new Date(fb.timestamp).toLocaleString()}</p>
+                    </div>
+                `).join('');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Error fetching admin data.');
         }
     }
 
+    // Deletion Functions (Global scope)
+    window.deleteAdminFeedback = async function(id) {
+        if (confirm('Are you sure you want to delete this feedback?')) {
+            const token = localStorage.getItem('nesf_admin_token');
+            await fetch(`http://localhost:3000/api/admin/feedbacks/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+            renderAdminData();
+        }
+    };
+
+    window.deleteAdminMessage = async function(id) {
+        if (confirm('Are you sure you want to delete this message?')) {
+            const token = localStorage.getItem('nesf_admin_token');
+            await fetch(`http://localhost:3000/api/admin/messages/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+            renderAdminData();
+        }
+    };
+
+    window.deleteAdminCollab = async function(id) {
+        if (confirm('Are you sure you want to delete this collaboration request?')) {
+            const token = localStorage.getItem('nesf_admin_token');
+            await fetch(`http://localhost:3000/api/admin/collaborations/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+            renderAdminData();
+        }
+    };
+
     // Function to load dynamic testimonials from localStorage
     function loadDynamicTestimonials() {
-        const feedbacks = JSON.parse(localStorage.getItem('nesf_feedbacks') || '[]');
-        if (feedbacks.length === 0) return;
-        
-        const successGrid = document.querySelector('.success-stories-grid');
-        if (!successGrid) return;
-        
-        // Clear previously added dynamic cards to prevent duplication
-        const existingDynamic = successGrid.querySelectorAll('.dynamic-card');
-        existingDynamic.forEach(el => el.remove());
-
-        // Prepend new feedbacks
-        feedbacks.reverse().forEach((fb) => {
-            const card = document.createElement('div');
-            card.className = 'success-card dynamic-card';
-            
-            // Create rating stars
-            let stars = '';
-            const ratingNum = parseInt(fb.rating) || 5;
-            for (let i = 0; i < 5; i++) {
-                if (i < ratingNum) {
-                    stars += '<i class="fas fa-star" style="color: var(--accent-color); margin-right: 2px;"></i>';
-                } else {
-                    stars += '<i class="far fa-star" style="color: var(--border-color); margin-right: 2px;"></i>';
-                }
-            }
-
-            card.innerHTML = `
-                <div class="success-card-quote">
-                    <i class="fas fa-quote-right"></i>
-                </div>
-                <div class="success-card-header">
-                    <img src="${fb.avatar}" alt="${fb.name}">
-                    <div>
-                        <h3>${fb.name}</h3>
-                        <p style="color: var(--primary-light); font-weight: 600;">${fb.course} Graduate</p>
-                        <div style="font-size: 11px; margin-top: 4px; display: flex; gap: 2px;">${stars}</div>
-                    </div>
-                </div>
-                <div class="success-card-company">
-                    <i class="fas fa-briefcase"></i> Placement: ${fb.internship}
-                </div>
-                <div class="success-card-achievements" style="display: flex; flex-direction: column; gap: 8px;">
-                    <p style="color: var(--text-dark); font-weight: 500; font-style: normal; line-height: 1.6;">"${fb.text}"</p>
-                    <p style="font-size: 13px; color: #dc2626; font-style: normal; background: rgba(220, 38, 38, 0.05); padding: 8px 12px; border-radius: 6px;"><strong style="color: var(--text-dark);">Kami / Suggestions:</strong> "${fb.drawbacks}"</p>
-                </div>
-                <div class="success-card-stats" style="margin-top: 12px; border-top: 1px solid var(--border-color); padding-top: 12px;">
-                    <div>
-                        <div style="color: var(--primary-color); font-weight: 800; font-size: 20px;">${fb.duration}</div>
-                        <div>Duration</div>
-                    </div>
-                    <div>
-                        <div style="color: var(--secondary-color); font-weight: 800; font-size: 20px;">Feedback</div>
-                        <div>Type</div>
-                    </div>
-                </div>
-            `;
-            
-            // Prepend to the grid
-            successGrid.insertBefore(card, successGrid.firstChild);
-            
-            // Observe the new element for fade-in animation
-            if (typeof fadeObserver !== 'undefined' && fadeObserver) {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                fadeObserver.observe(card);
-            }
-        });
+        // Disabled completely: Feedback only goes to admin panel now.
+        return;
     }
 
     // Fade In Animation for Cards
