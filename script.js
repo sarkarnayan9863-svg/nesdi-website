@@ -210,6 +210,160 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Select Collaboration Type on card click
+    const collabDetails = {
+        'Academic Institution': {
+            icon: 'fas fa-university',
+            color: 'linear-gradient(135deg, #0f3460, #1e5f9c)',
+            tagline: 'Partner with us for academic excellence and student growth',
+            description: 'NESF welcomes partnerships with universities, colleges, and educational institutions across India and beyond. Together, we can bridge the gap between academic learning and real-world skills.',
+            benefits: [
+                'Student internship placement & mentorship programs',
+                'Joint curriculum development and guest lectures',
+                'Research collaborations and academic publications',
+                'Faculty exchange and development programs (FDP)',
+                'Co-branded skill certification programs',
+                'Campus outreach and awareness drives'
+            ],
+            whoCanJoin: 'Universities, colleges, polytechnics, schools, coaching institutes, and ed-tech platforms.',
+            process: 'Submit a collaboration request → NESF team will connect within 48 hours → MOU signing → Program launch'
+        },
+        'Corporate & Industry': {
+            icon: 'fas fa-building',
+            color: 'linear-gradient(135deg, #e94560, #f472b6)',
+            tagline: 'Build your talent pipeline and fulfill CSR goals with NESF',
+            description: 'NESF partners with corporate organizations and industry leaders to bridge the skill gap between trained youth and industry requirements, while also fulfilling meaningful CSR commitments.',
+            benefits: [
+                'Access to a trained talent pool for recruitment',
+                'CSR project implementation under Schedule VIII',
+                'Customized corporate training and upskilling programs',
+                'Co-branded workshops and industry mentorship sessions',
+                'Brand visibility at NESF events and platforms',
+                'Impact reports and CSR documentation support'
+            ],
+            whoCanJoin: 'Private companies, MNCs, industry associations, trade bodies, and industry chambers.',
+            process: 'Submit a collaboration request → Discussion with NESF team → Agreement → Program design & delivery'
+        },
+        'NGO & Nonprofit': {
+            icon: 'fas fa-hands-helping',
+            color: 'linear-gradient(135deg, #0d9488, #14b8a6)',
+            tagline: 'Together we can create deeper grassroots impact',
+            description: 'NESF collaborates with NGOs, nonprofits, and civil society organizations to amplify community outreach, skill development at the grassroots level, and social impact programs across North East India.',
+            benefits: [
+                'Joint community skill development programs',
+                'Shared resources and training infrastructure',
+                'Co-implementation of government-funded social schemes',
+                'Women empowerment and livelihood programs',
+                'Disaster relief and humanitarian initiatives',
+                'Collaborative grant writing and project proposals'
+            ],
+            whoCanJoin: 'Registered NGOs, Section 8 companies, trusts, charitable societies, and community-based organizations.',
+            process: 'Submit a collaboration request → Partnership discussion → MOU → Joint program design & execution'
+        },
+        'International Organization': {
+            icon: 'fas fa-globe',
+            color: 'linear-gradient(135deg, #f39c12, #fbbf24)',
+            tagline: 'Global partnerships for local transformation',
+            description: 'NESF actively seeks partnerships with international organizations, development agencies, and global foundations to bring world-class skill development, certifications, and knowledge to the youth of North East India.',
+            benefits: [
+                'International certification and recognition programs',
+                'Cross-border education and student exchange',
+                'SDG-aligned programs and impact measurement',
+                'Access to global funding and development grants',
+                'Knowledge transfer and best practices sharing',
+                'Participation in global conferences and forums'
+            ],
+            whoCanJoin: 'UN agencies, international NGOs, bilateral organizations, global foundations, and foreign universities.',
+            process: 'Submit collaboration request → Initial consultation → Partnership framework → MOU → Program launch'
+        },
+        'Government Body': {
+            icon: 'fas fa-landmark',
+            color: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+            tagline: 'Empowering national missions through skill development',
+            description: 'NESF works closely with government bodies at the state and central level to implement skill development schemes, national missions, and community welfare programs across North East India.',
+            benefits: [
+                'Implementation of Skill India, PMKVY and other national schemes',
+                'Training and placement under government skill missions',
+                'Community mobilization and awareness programs',
+                'Policy implementation support and ground-level execution',
+                'Assessment and certification under national frameworks',
+                'Reporting, documentation, and compliance support'
+            ],
+            whoCanJoin: 'Central ministries, state government departments, public sector bodies, district administrations, and municipal corporations.',
+            process: 'Submit collaboration request → Government liaison → MOU/Agreement → Scheme implementation → Impact reporting'
+        },
+        'Startup & Entrepreneur': {
+            icon: 'fas fa-lightbulb',
+            color: 'linear-gradient(135deg, #10b981, #34d399)',
+            tagline: 'Grow your startup with NESF\'s network and talent',
+            description: 'NESF provides a strong launchpad for startups and entrepreneurs by connecting them with trained talent, mentorship networks, co-working opportunities, and collaborative program development.',
+            benefits: [
+                'Access to NESF\'s trained intern and fresher talent pool',
+                'Co-creation of training and upskilling content',
+                'Mentorship and motivational workshop partnerships',
+                'Incubation support and startup visibility at NESF events',
+                'Joint entrepreneurship workshop organization',
+                'Networking with NESF\'s corporate and institutional partners'
+            ],
+            whoCanJoin: 'Registered startups, early-stage companies, entrepreneurs, freelancers, and solopreneurs.',
+            process: 'Submit collaboration request → Startup onboarding discussion → Partnership plan → Execution'
+        },
+        'PSU (Public Sector Undertaking)': {
+            icon: 'fas fa-industry',
+            color: 'linear-gradient(135deg, #0f766e, #14b8a6)',
+            tagline: 'Partner with NESF to build a skilled national workforce',
+            description: 'NESF welcomes tie-ups with Public Sector Undertakings (PSUs) across India to deliver skill development, CSR-funded training, campus recruitment, and workforce upskilling aligned with national missions and industry requirements.',
+            benefits: [
+                'CSR-funded skill development under Schedule VIII of Companies Act',
+                'Campus recruitment from NESF\'s trained talent pool',
+                'Workforce upskilling and reskilling programs for PSU employees',
+                'Apprenticeship and on-the-job training tie-ups',
+                'Community development programs in PSU operational areas',
+                'Brand visibility and social impact documentation'
+            ],
+            whoCanJoin: 'Navratna, Miniratna, and other Central & State PSUs across sectors including energy, infrastructure, finance, and manufacturing.',
+            process: 'Submit collaboration request → PSU liaison → MOU/Agreement → CSR program design → Delivery & impact reporting'
+        }
+    };
+
+    window.selectCollabType = function(type) {
+        const e = window.event;
+        const details = collabDetails[type];
+        if (!details) return;
+
+        // Build modal content
+        const benefitsList = details.benefits.map(b => `<li><i class="fas fa-check-circle" style="color:#10b981; margin-right:8px;"></i>${b}</li>`).join('');
+
+        detailsModalTitle.innerHTML = `<span style="display:inline-flex;align-items:center;gap:12px;">
+            <span style="width:44px;height:44px;border-radius:12px;background:${details.color};display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="${details.icon}" style="color:white;font-size:20px;"></i>
+            </span>
+            ${type}
+        </span>`;
+
+        detailsModalBody.innerHTML = `
+            <p style="color:var(--primary-light);font-weight:600;font-size:16px;margin-bottom:16px;font-style:italic;">${details.tagline}</p>
+            <p style="margin-bottom:24px;font-size:16px;line-height:1.8;">${details.description}</p>
+            <h3><i class="fas fa-star"></i> Key Benefits</h3>
+            <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">${benefitsList}</ul>
+            <h3><i class="fas fa-users"></i> Who Can Join</h3>
+            <p style="margin-bottom:24px;">${details.whoCanJoin}</p>
+            <h3><i class="fas fa-route"></i> Collaboration Process</h3>
+            <p style="margin-bottom:28px;">${details.process}</p>
+            <button onclick="document.getElementById('detailsModal').style.display='none'; document.getElementById('collabType').value='${type}'; document.getElementById('collaborationForm').scrollIntoView({behavior:'smooth',block:'center'});" 
+                class="btn btn-primary" style="background:var(--primary-color);color:white;width:100%;justify-content:center;">
+                <i class="fas fa-paper-plane" style="margin-right:8px;"></i> Send Collaboration Request as ${type}
+            </button>
+        `;
+
+        detailsModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+
+        // Also highlight the card
+        document.querySelectorAll('.collab-type-card').forEach(card => card.classList.remove('collab-card-active'));
+        if (e && e.currentTarget) e.currentTarget.classList.add('collab-card-active');
+    };
+
 
     // Open Feedback Modal
     if (openFeedbackBtn) {
