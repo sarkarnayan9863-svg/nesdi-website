@@ -749,20 +749,30 @@ document.addEventListener('DOMContentLoaded', function() {
         let isPaused = false;
         let scrollDirection = 1;
 
-        function isMobile() {
-            return window.innerWidth <= 768;
-        }
-
         function startAutoScroll() {
             clearInterval(scrollInterval);
-            if (!isMobile()) return;
+            
+            // Check if there is actual scrollable overflow
+            const maxScroll = grid.scrollWidth - grid.clientWidth;
+            if (maxScroll <= 5) return;
+
+            grid.classList.add('auto-scrolling');
 
             scrollInterval = setInterval(function() {
-                if (isPaused) return;
+                if (isPaused) {
+                    grid.classList.remove('auto-scrolling');
+                    return;
+                }
 
-                const maxScroll = grid.scrollWidth - grid.clientWidth;
+                grid.classList.add('auto-scrolling');
 
-                if (grid.scrollLeft >= maxScroll - 2) {
+                const currentMaxScroll = grid.scrollWidth - grid.clientWidth;
+                if (currentMaxScroll <= 5) {
+                    grid.classList.remove('auto-scrolling');
+                    return;
+                }
+
+                if (grid.scrollLeft >= currentMaxScroll - 2) {
                     scrollDirection = -1;
                 } else if (grid.scrollLeft <= 2) {
                     scrollDirection = 1;
@@ -773,22 +783,35 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Pause on touch
-        grid.addEventListener('touchstart', function() { isPaused = true; }, { passive: true });
+        grid.addEventListener('touchstart', function() { 
+            isPaused = true; 
+            grid.classList.remove('auto-scrolling');
+        }, { passive: true });
+        
         grid.addEventListener('touchend', function() {
             setTimeout(function() { isPaused = false; }, 2500);
         }, { passive: true });
 
         // Pause on mouse hover
-        grid.addEventListener('mouseenter', function() { isPaused = true; });
-        grid.addEventListener('mouseleave', function() { isPaused = false; });
+        grid.addEventListener('mouseover', function() { 
+            isPaused = true; 
+            grid.classList.remove('auto-scrolling');
+        });
+        
+        grid.addEventListener('mouseout', function(e) { 
+            if (!grid.contains(e.relatedTarget)) {
+                isPaused = false; 
+            }
+        });
 
         // Start when section visible
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
-                if (entry.isIntersecting && isMobile()) {
+                if (entry.isIntersecting) {
                     startAutoScroll();
                 } else {
                     clearInterval(scrollInterval);
+                    grid.classList.remove('auto-scrolling');
                 }
             });
         }, { threshold: 0.2 });
@@ -798,7 +821,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Handle resize
         window.addEventListener('resize', function() {
             clearInterval(scrollInterval);
-            if (isMobile()) startAutoScroll();
+            grid.classList.remove('auto-scrolling');
+            startAutoScroll();
         });
     });
 })();

@@ -740,11 +740,21 @@ section {
 }
 
 .objectives-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: visible;
     gap: 24px;
     position: relative;
     z-index: 1;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 16px 8px 32px;
+}
+
+.objectives-grid::-webkit-scrollbar {
+    display: none;
 }
 
 .objective-card {
@@ -757,6 +767,8 @@ section {
     border: 2px solid rgba(255, 255, 255, 0.2);
     position: relative;
     overflow: hidden;
+    flex: 0 0 300px;
+    scroll-snap-align: start;
 }
 
 .objective-card::before {
@@ -928,9 +940,19 @@ section {
 }
 
 .programs-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: visible;
     gap: 32px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 16px 8px 32px;
+}
+
+.programs-grid::-webkit-scrollbar {
+    display: none;
 }
 
 .program-card {
@@ -942,6 +964,8 @@ section {
     border: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
+    flex: 0 0 380px;
+    scroll-snap-align: start;
 }
 
 .program-card:hover {
@@ -1037,9 +1061,19 @@ section {
 }
 
 .internships-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: visible;
     gap: 32px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 16px 8px 32px;
+}
+
+.internships-grid::-webkit-scrollbar {
+    display: none;
 }
 
 .internship-card {
@@ -1051,6 +1085,8 @@ section {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    flex: 0 0 380px;
+    scroll-snap-align: start;
 }
 
 .internship-image {
@@ -1369,10 +1405,20 @@ section {
 }
 
 .success-stories-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: visible;
     gap: 32px;
     margin-top: 50px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 16px 8px 32px;
+}
+
+.success-stories-grid::-webkit-scrollbar {
+    display: none;
 }
 
 .success-card {
@@ -1384,6 +1430,8 @@ section {
     position: relative;
     overflow: hidden;
     border: 1px solid var(--border-color);
+    flex: 0 0 420px;
+    scroll-snap-align: start;
 }
 
 .success-card:hover {
@@ -1570,24 +1618,9 @@ section {
     .success-stories-grid,
     .objectives-grid,
     .collab-types-grid {
-        display: flex !important;
-        flex-direction: row !important;
-        overflow-x: auto !important;
-        overflow-y: visible !important;
         gap: 14px !important;
-        scroll-snap-type: x mandatory !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: none !important;
         padding: 8px 20px 20px !important;
         margin: 0 -16px !important;
-    }
-
-    .programs-grid::-webkit-scrollbar,
-    .internships-grid::-webkit-scrollbar,
-    .success-stories-grid::-webkit-scrollbar,
-    .objectives-grid::-webkit-scrollbar,
-    .collab-types-grid::-webkit-scrollbar {
-        display: none !important;
     }
 
     /* Card — full screen width, centered, no image */
@@ -1785,10 +1818,20 @@ section {
 }
 
 .collab-types-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: visible;
     gap: 24px;
     margin-bottom: 60px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 16px 8px 32px;
+}
+
+.collab-types-grid::-webkit-scrollbar {
+    display: none;
 }
 
 .collab-type-card {
@@ -1800,6 +1843,8 @@ section {
     transition: var(--transition);
     text-align: center;
     cursor: pointer;
+    flex: 0 0 320px;
+    scroll-snap-align: start;
 }
 
 .collab-type-card:hover {
@@ -2175,4 +2220,13 @@ section {
 .clickable-card:hover {
     transform: translateY(-10px) scale(1.02) !important;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Disable scroll snapping during active auto-scrolling */
+.programs-grid.auto-scrolling,
+.internships-grid.auto-scrolling,
+.objectives-grid.auto-scrolling,
+.collab-types-grid.auto-scrolling,
+.success-stories-grid.auto-scrolling {
+    scroll-snap-type: none !important;
 }
