@@ -662,7 +662,7 @@
                                 <label for="subject">Subject</label>
                                 <select id="subject" name="subject" required>
                                     <option value="">Select an option</option>
-                                    <option value="internship">Internship Inquiry</option>
+                                    <option value="general">General Inquiry</option>
                                     <option value="program">Program Information</option>
                                     <option value="partnership">Partnership Opportunity</option>
                                     <option value="other">Other</option>
@@ -777,42 +777,7 @@
         </div>
     </div>
 
-    <!-- Application Modal -->
-    <div id="applicationModal" class="details-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 style="font-size: 28px; font-weight: 800; color: #0f172a;" id="modalTitle">Apply for Internship</h2>
-                <button id="closeModal" class="close-modal">&times;</button>
-            </div>
-            <form id="applicationForm">
-                <div class="form-group">
-                    <label for="applicantName">Full Name</label>
-                    <input type="text" id="applicantName" name="applicantName" required>
-                </div>
-                <div class="form-group">
-                    <label for="applicantEmail">Email Address</label>
-                    <input type="email" id="applicantEmail" name="applicantEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="applicantPhone">Phone Number</label>
-                    <input type="tel" id="applicantPhone" name="applicantPhone">
-                </div>
-                <div class="form-group">
-                    <label for="applicantEducation">Educational Qualification</label>
-                    <input type="text" id="applicantEducation" name="applicantEducation" required>
-                </div>
-                <div class="form-group">
-                    <label for="applicantResume">Resume Link / Drive URL</label>
-                    <input type="url" id="applicantResume" name="applicantResume" required>
-                </div>
-                <div class="form-group">
-                    <label for="applicantCoverLetter">Cover Letter (Optional)</label>
-                    <textarea id="applicantCoverLetter" name="applicantCoverLetter" rows="4"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary btn-full" style="background: #0f172a; color: white; margin-top: 16px;">Submit Application</button>
-            </form>
-        </div>
-    </div>
+
 
     <!-- Feedback Modal -->
     <div id="feedbackModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center; padding: 24px;">
@@ -844,11 +809,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="feedbackInternship">Internship / Placement Outcome</label>
-                    <input type="text" id="feedbackInternship" name="feedbackInternship" placeholder="e.g., TechVision Solutions, Remote, Stipend, etc." required>
+                    <label for="feedbackInternship">Job / Placement Outcome (Optional)</label>
+                    <input type="text" id="feedbackInternship" name="feedbackInternship" placeholder="e.g., Hired by TechVision, Self-Employed, etc.">
                 </div>
                 <div class="form-group">
-                    <label for="feedbackDuration">Course / Internship Duration</label>
+                    <label for="feedbackDuration">Course Duration</label>
                     <input type="text" id="feedbackDuration" name="feedbackDuration" placeholder="e.g., 6 Months, 3 Months" required>
                 </div>
                 <div class="form-group">
@@ -886,10 +851,7 @@
                 <button id="closeAdminModal" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #6b7280;">&times;</button>
             </div>
 
-            <div style="margin-bottom: 32px;">
-                <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 16px; color: #1e3a8a;">Internship Applications</h3>
-                <div id="applicationsList" style="display: flex; flex-direction: column; gap: 16px;"></div>
-            </div>
+
 
             <div style="margin-bottom: 32px;">
                 <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 16px; color: #1e3a8a;">Contact Messages</h3>

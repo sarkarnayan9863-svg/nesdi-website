@@ -4,14 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
     const contactForm = document.getElementById('contactForm');
-    const applicationModal = document.getElementById('applicationModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const closeModalBtn = document.getElementById('closeModal');
-    const applicationForm = document.getElementById('applicationForm');
     const viewApplicationsBtn = document.getElementById('viewApplicationsBtn');
     const adminModal = document.getElementById('adminModal');
     const closeAdminModalBtn = document.getElementById('closeAdminModal');
-    const applicationsList = document.getElementById('applicationsList');
     const messagesList = document.getElementById('messagesList');
     const detailsModal = document.getElementById('detailsModal');
     const detailsModalTitle = document.getElementById('detailsModalTitle');
@@ -26,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const feedbackForm = document.getElementById('feedbackForm');
     const feedbacksList = document.getElementById('feedbacksList');
     
-    let currentInternship = '';
     let secretCode = '';
     const targetSecretCode = 'nesf';
 
@@ -105,62 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     window.addEventListener('scroll', highlightNavLink);
 
-    // Apply Now Button Handler
-    const applyButtons = document.querySelectorAll('.internship-card .btn-outline');
-    applyButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const card = this.closest('.internship-card');
-            currentInternship = card.querySelector('h3').textContent;
-            modalTitle.textContent = `Apply for ${currentInternship}`;
-            applicationModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        });
-    });
 
-    // Close Application Modal
-    closeModalBtn.addEventListener('click', function() {
-        applicationModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        applicationForm.reset();
-    });
-
-    applicationModal.addEventListener('click', function(e) {
-        if (e.target === applicationModal) {
-            applicationModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            applicationForm.reset();
-        }
-    });
-
-    // Application Form Handler
-    applicationForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = {
-            internship: currentInternship,
-            name: document.getElementById('applicantName').value,
-            email: document.getElementById('applicantEmail').value,
-            phone: document.getElementById('applicantPhone').value,
-            education: document.getElementById('applicantEducation').value,
-            resume: document.getElementById('applicantResume').value,
-            coverLetter: document.getElementById('applicantCoverLetter').value,
-            timestamp: new Date().toISOString()
-        };
-
-        let applications = JSON.parse(localStorage.getItem('nesf_applications') || '[]');
-        applications.push(formData);
-        localStorage.setItem('nesf_applications', JSON.stringify(applications));
-        
-        console.log('Application Submitted:', formData);
-        console.log('Total Applications:', applications.length);
-
-        alert(`Application for "${currentInternship}" submitted successfully! We will review your application and get back to you soon.`);
-
-        applicationModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        applicationForm.reset();
-    });
 
     // Contact Form Handler
     contactForm.addEventListener('submit', function(e) {
@@ -452,25 +391,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to render applications and messages in admin modal
     function renderAdminData() {
-        const applications = JSON.parse(localStorage.getItem('nesf_applications') || '[]');
         const messages = JSON.parse(localStorage.getItem('nesf_messages') || '[]');
-
-        // Render Applications
-        if (applications.length === 0) {
-            applicationsList.innerHTML = '<p style="color: #6b7280; font-size: 16px;">No applications submitted yet!</p>';
-        } else {
-            applicationsList.innerHTML = applications.reverse().map(app => `
-                <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border-left: 4px solid #1e3a8a;">
-                    <h4 style="font-size: 18px; margin-bottom: 8px; color: #0f172a;">${app.name} - ${app.internship}</h4>
-                    <p style="margin-bottom: 4px;"><strong>Email:</strong> ${app.email}</p>
-                    ${app.phone ? `<p style="margin-bottom: 4px;"><strong>Phone:</strong> ${app.phone}</p>` : ''}
-                    <p style="margin-bottom: 4px;"><strong>Education:</strong> ${app.education}</p>
-                    <p style="margin-bottom: 4px;"><strong>Resume:</strong> <a href="${app.resume}" target="_blank" style="color: #1e3a8a; text-decoration: underline;">View Resume</a></p>
-                    ${app.coverLetter ? `<p style="margin-bottom: 4px; margin-top: 8px;"><strong>Cover Letter:</strong> ${app.coverLetter}</p>` : ''}
-                    <p style="margin-top: 8px; font-size: 12px; color: #6b7280;">Submitted on: ${new Date(app.timestamp).toLocaleString()}</p>
-                </div>
-            `).join('');
-        }
 
         // Render Messages
         if (messages.length === 0) {
