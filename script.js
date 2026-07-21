@@ -730,3 +730,75 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Auto-scroll for mobile card grids
+(function() {
+    const autoScrollGrids = [
+        '.programs-grid',
+        '.internships-grid',
+        '.objectives-grid',
+        '.collab-types-grid',
+        '.success-stories-grid'
+    ];
+
+    autoScrollGrids.forEach(function(selector) {
+        const grid = document.querySelector(selector);
+        if (!grid) return;
+
+        let scrollInterval = null;
+        let isPaused = false;
+        let scrollDirection = 1;
+
+        function isMobile() {
+            return window.innerWidth <= 768;
+        }
+
+        function startAutoScroll() {
+            clearInterval(scrollInterval);
+            if (!isMobile()) return;
+
+            scrollInterval = setInterval(function() {
+                if (isPaused) return;
+
+                const maxScroll = grid.scrollWidth - grid.clientWidth;
+
+                if (grid.scrollLeft >= maxScroll - 2) {
+                    scrollDirection = -1;
+                } else if (grid.scrollLeft <= 2) {
+                    scrollDirection = 1;
+                }
+
+                grid.scrollLeft += scrollDirection * 1.5;
+            }, 20);
+        }
+
+        // Pause on touch
+        grid.addEventListener('touchstart', function() { isPaused = true; }, { passive: true });
+        grid.addEventListener('touchend', function() {
+            setTimeout(function() { isPaused = false; }, 2500);
+        }, { passive: true });
+
+        // Pause on mouse hover
+        grid.addEventListener('mouseenter', function() { isPaused = true; });
+        grid.addEventListener('mouseleave', function() { isPaused = false; });
+
+        // Start when section visible
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting && isMobile()) {
+                    startAutoScroll();
+                } else {
+                    clearInterval(scrollInterval);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        observer.observe(grid);
+
+        // Handle resize
+        window.addEventListener('resize', function() {
+            clearInterval(scrollInterval);
+            if (isMobile()) startAutoScroll();
+        });
+    });
+})();
