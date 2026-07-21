@@ -186,6 +186,31 @@ document.addEventListener('DOMContentLoaded', function() {
         contactForm.reset();
     });
 
+    // Collaboration Form Handler
+    const collaborationForm = document.getElementById('collaborationForm');
+    if (collaborationForm) {
+        collaborationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const collabData = {
+                orgName: document.getElementById('collabOrgName').value,
+                email: document.getElementById('collabEmail').value,
+                phone: document.getElementById('collabPhone').value,
+                type: document.getElementById('collabType').value,
+                message: document.getElementById('collabMessage').value,
+                timestamp: new Date().toISOString()
+            };
+
+            let collabs = JSON.parse(localStorage.getItem('nesf_collaborations') || '[]');
+            collabs.push(collabData);
+            localStorage.setItem('nesf_collaborations', JSON.stringify(collabs));
+
+            alert('Thank you for your collaboration request! Our team will reach out to you shortly.');
+            collaborationForm.reset();
+        });
+    }
+
+
     // Open Feedback Modal
     if (openFeedbackBtn) {
         openFeedbackBtn.addEventListener('click', function() {

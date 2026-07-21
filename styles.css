@@ -1313,101 +1313,506 @@ section {
         right: 0;
         background: var(--bg-white);
         flex-direction: column;
-        padding: 20px;
+        padding: 16px;
         box-shadow: var(--shadow-lg);
         z-index: 999;
+        gap: 4px;
     }
     .nav-menu.active {
         display: flex;
     }
+    .nav-menu li {
+        width: 100%;
+    }
+    .nav-link {
+        display: block;
+        padding: 10px 16px;
+        font-size: 14px;
+        border-radius: 8px;
+    }
+    .nav-link:hover {
+        background: var(--bg-light);
+    }
     .nav-toggle {
         display: block;
     }
+    .navbar .container {
+        padding: 12px 16px;
+    }
+    .nav-brand {
+        font-size: 18px;
+        gap: 8px;
+    }
+    .nav-logo {
+        height: 36px;
+        width: 36px;
+    }
+
+    /* Hero Section */
     .hero-title {
-        font-size: 32px;
+        font-size: 28px;
     }
     .hero-subtitle {
-        font-size: 16px;
+        font-size: 14px;
+        margin-bottom: 28px;
     }
     .hero-buttons {
         flex-direction: column;
-        gap: 12px;
+        align-items: center;
+        gap: 10px;
     }
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+    .hero-content {
+        padding: 100px 16px 60px;
+    }
+
+    /* Section */
     .section-title {
-        font-size: 28px;
+        font-size: 24px;
     }
+    .section-header {
+        margin-bottom: 40px;
+    }
+    section {
+        padding: 60px 0;
+    }
+
+    /* Grids */
     .programs-grid,
     .internships-grid,
     .success-stories-grid,
     .stats-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
     .objectives-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
     .focus-areas-grid {
         grid-template-columns: 1fr;
     }
+
+    /* Cards */
+    .program-card-image {
+        height: 160px;
+    }
+    .program-card-content {
+        padding: 20px;
+    }
+    .program-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+        margin-top: -40px;
+    }
+    .program-card h3 {
+        font-size: 18px;
+    }
+    .internship-card h3 {
+        font-size: 17px;
+    }
+    .internship-image {
+        height: 150px;
+    }
+    .internship-card > *:not(.internship-image):not(.internship-badge) {
+        padding: 0 16px;
+    }
+    .internship-card > .btn {
+        margin: 0 16px 20px;
+    }
+
+    /* Objective cards */
+    .objective-card {
+        padding: 24px 18px;
+    }
+    .objective-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+    }
+    .objective-icon i {
+        font-size: 22px;
+    }
+    .objective-card h4 {
+        font-size: 17px;
+    }
+    .objective-card p {
+        font-size: 14px;
+    }
+
+    /* Objectives section */
+    .objectives-section {
+        padding: 36px 16px;
+        border-radius: 20px;
+    }
+    .objectives-title {
+        font-size: 24px;
+        margin-bottom: 32px;
+    }
+
+    /* Directors */
+    .directors-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .director-card {
+        padding: 36px 20px;
+    }
+    .director-photo img {
+        width: 130px;
+        height: 130px;
+    }
+    .director-quote {
+        font-size: 14px;
+    }
+    .director-name {
+        font-size: 18px;
+    }
+
+    /* Success cards */
+    .success-card {
+        padding: 28px 20px;
+    }
     .success-card-stats {
         gap: 16px;
     }
-    .footer-grid {
+
+    /* Contact */
+    .contact-info-card,
+    .contact-form-card {
+        padding: 24px 16px;
+    }
+    .form-row {
         grid-template-columns: 1fr;
     }
+    .contact-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+    .social-link {
+        width: 44px;
+        height: 44px;
+        font-size: 16px;
+    }
+
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    .footer {
+        padding: 50px 0 24px;
+    }
+
+    /* About mission */
     .about-mission {
         padding: 30px 20px;
     }
     .about-mission-title {
-        font-size: 28px;
+        font-size: 24px;
     }
     .about-mission-text {
-        font-size: 16px;
-    }
-    .objectives-section {
-        padding: 40px 20px;
-    }
-    .objectives-title {
-        font-size: 28px;
-    }
-    .contact-info-card,
-    .contact-form-card {
-        padding: 30px 20px;
-    }
-    .form-row {
-        grid-template-columns: 1fr;
+        font-size: 15px;
     }
 }
 
 @media (max-width: 480px) {
     .container {
-        padding: 0 16px;
+        padding: 0 14px;
     }
     .nav-brand span {
-        font-size: 20px;
+        font-size: 16px;
     }
     .nav-logo {
-        height: 40px;
-        width: 40px;
+        height: 32px;
+        width: 32px;
     }
     .hero-title {
-        font-size: 26px;
+        font-size: 22px;
+    }
+    .hero-subtitle {
+        font-size: 13px;
+    }
+    .hero-buttons .btn {
+        max-width: 100%;
+        font-size: 13px;
+        padding: 11px 20px;
     }
     .hero-content {
-        padding: 140px 0 60px;
+        padding: 90px 14px 50px;
     }
     .section-title {
-        font-size: 24px;
+        font-size: 20px;
     }
-    .program-card,
-    .internship-card,
-    .success-card {
-        padding: 24px;
+    .section-tag {
+        font-size: 11px;
+        padding: 6px 14px;
     }
     .objective-card {
-        padding: 28px 20px;
+        padding: 20px 14px;
+    }
+    .objective-card h4 {
+        font-size: 15px;
+    }
+    .objective-card p {
+        font-size: 13px;
+    }
+    .program-card h3 {
+        font-size: 16px;
+    }
+    .program-card p {
+        font-size: 13px;
+    }
+    .internship-card h3 {
+        font-size: 15px;
+    }
+    .success-card {
+        padding: 22px 14px;
+    }
+    .success-card-header img {
+        width: 60px;
+        height: 60px;
+    }
+    .success-card-header h3 {
+        font-size: 16px;
+    }
+    .director-photo img {
+        width: 110px;
+        height: 110px;
+    }
+    .director-quote {
+        font-size: 13px;
+    }
+    .contact-item {
+        gap: 14px;
+    }
+    .modal-content {
+        padding: 24px 16px;
+        margin: 10px auto;
+    }
+    .modal-header h2 {
+        font-size: 22px;
+    }
+    .modal-body {
+        font-size: 15px;
     }
     .about-grid {
-        gap: 30px;
+        gap: 24px;
+    }
+}
+
+/* Collaboration Section */
+.collaboration {
+    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.collab-types-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 60px;
+}
+
+.collab-type-card {
+    background: var(--bg-white);
+    border-radius: 20px;
+    padding: 32px 24px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    text-align: center;
+}
+
+.collab-type-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-light);
+}
+
+.collab-type-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.collab-type-icon i {
+    color: white;
+    font-size: 28px;
+}
+
+.collab-type-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+}
+
+.collab-type-card p {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.7;
+}
+
+.collab-form-wrapper {
+    background: linear-gradient(135deg, #0a223f 0%, #0f3460 50%, #1e5f9c 100%);
+    border-radius: 28px;
+    padding: 50px 40px;
+    box-shadow: var(--shadow-xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.collab-form-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(243, 156, 18, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 50%);
+}
+
+.collab-form-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 50px;
+    position: relative;
+    z-index: 1;
+}
+
+.collab-form-left h3,
+.collab-form-right h3 {
+    font-size: 22px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 24px;
+}
+
+.collab-benefits {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.collab-benefits li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: rgba(255,255,255,0.88);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.collab-benefits li i {
+    color: #34d399;
+    font-size: 18px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.collab-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.collab-form .form-group label {
+    color: rgba(255,255,255,0.9);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.collab-form .form-group input,
+.collab-form .form-group select,
+.collab-form .form-group textarea {
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,255,255,0.2);
+    color: white;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 13px 16px;
+}
+
+.collab-form .form-group input::placeholder,
+.collab-form .form-group textarea::placeholder {
+    color: rgba(255,255,255,0.45);
+}
+
+.collab-form .form-group select option {
+    background: #0f3460;
+    color: white;
+}
+
+.collab-form .form-group input:focus,
+.collab-form .form-group select:focus,
+.collab-form .form-group textarea:focus {
+    outline: none;
+    border-color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.15);
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.1);
+}
+
+.collab-form .btn-primary {
+    background: white;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.collab-form .btn-primary:hover {
+    background: #f1f5f9;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 992px) {
+    .collab-types-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .collab-form-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .collab-types-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    .collab-form-wrapper {
+        padding: 32px 20px;
+        border-radius: 20px;
+    }
+    .collab-type-card {
+        padding: 24px 16px;
+    }
+    .collab-type-icon {
+        width: 56px;
+        height: 56px;
+    }
+    .collab-type-icon i {
+        font-size: 22px;
+    }
+    .collab-type-card h3 {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .collab-types-grid {
+        grid-template-columns: 1fr;
     }
 }
 
