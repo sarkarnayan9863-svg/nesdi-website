@@ -375,6 +375,15 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 900;
 }
 
+.hero-word-nesf {
+    color: #ffffff;
+    font-size: 80px;
+    letter-spacing: -2px;
+    font-weight: 900;
+    display: inline-block;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
 @keyframes titleGlow {
     0%, 100% {
         filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.9))
@@ -1579,7 +1588,7 @@ section {
 
     /* Hero */
     .hero-title { font-size: 32px; letter-spacing: -0.5px; }
-    .hero-title-highlight { font-size: 36px !important; letter-spacing: -0.5px; }
+    .hero-title-highlight, .hero-word-nesf { font-size: 36px !important; letter-spacing: -0.5px; }
     .hero-subtitle { font-size: 14px; margin-bottom: 24px; }
     .hero-buttons { flex-direction: column; align-items: center; gap: 10px; }
     .hero-buttons .btn { width: 100%; max-width: 280px; padding: 12px 24px; font-size: 14px; }
@@ -1789,7 +1798,7 @@ section {
     .nav-brand span { font-size: 16px; }
     .nav-logo { height: 32px; width: 32px; }
     .hero-title { font-size: 22px; }
-    .hero-title-highlight { font-size: 26px !important; }
+    .hero-title-highlight, .hero-word-nesf { font-size: 26px !important; }
     .hero-subtitle { font-size: 12px; }
     .hero-buttons .btn { font-size: 13px; padding: 11px 18px; }
     .hero-content { padding: 90px 14px 50px; }
