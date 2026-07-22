@@ -23,28 +23,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const feedbacksList = document.getElementById('feedbacksList');
     
     let secretCode = '';
-    const targetSecretCode = 'nesf';
+    const targetSecretCode = 'nesfghyone';
 
     // Secret code listener to show admin button
     document.addEventListener('keydown', function(e) {
+        if (e.key.length !== 1) return; // Ignore modifier keys like Shift, Control, etc.
         secretCode += e.key.toLowerCase();
         // Keep only the last N characters where N is length of target code
         secretCode = secretCode.slice(-targetSecretCode.length);
         
         if (secretCode === targetSecretCode) {
             secretCode = ''; // Reset the code
-            const pwd = prompt("Enter Admin Password:");
-            if (pwd === 'nesf') {
-                localStorage.setItem('nesf_admin_token', pwd);
+            const password = prompt("Enter Admin Password:");
+            if (!password) return;
+
+            fetch('/api/admin/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password })
+            }).then(async response => {
+                if (!response.ok) throw new Error('Incorrect password');
+                const data = await response.json();
+                localStorage.setItem('nesf_admin_token', data.token);
                 viewApplicationsBtn.style.display = 'block';
                 document.body.classList.add('admin-mode-active');
                 alert('Admin mode activated! Scroll to footer to see the button.');
                 if (adminModal && adminModal.style.display === 'flex') {
                     renderAdminData();
                 }
-            } else {
+            }).catch(() => {
                 alert("Incorrect password!");
-            }
+            });
         }
     });
 
@@ -126,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         try {
-            const res = await fetch('http://localhost:3000/api/messages', {
+            const res = await fetch('/api/messages', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -156,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             try {
-                const res = await fetch('http://localhost:3000/api/collaborations', {
+                const res = await fetch('/api/collaborations', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(collabData)
@@ -371,7 +380,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             try {
-                const res = await fetch('http://localhost:3000/api/feedbacks', {
+                const res = await fetch('/api/feedbacks', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
@@ -421,7 +430,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!token) return;
 
         try {
-            const res = await fetch('http://localhost:3000/api/admin/data', {
+            const res = await fetch('/api/admin/data', {
                 headers: { 'Authorization': 'Bearer ' + token }
             });
             
@@ -498,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.deleteAdminFeedback = async function(id) {
         if (confirm('Are you sure you want to delete this feedback?')) {
             const token = localStorage.getItem('nesf_admin_token');
-            await fetch(`http://localhost:3000/api/admin/feedbacks/${id}`, {
+            await fetch(`/api/admin/feedbacks/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': 'Bearer ' + token }
             });
@@ -509,7 +518,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.deleteAdminMessage = async function(id) {
         if (confirm('Are you sure you want to delete this message?')) {
             const token = localStorage.getItem('nesf_admin_token');
-            await fetch(`http://localhost:3000/api/admin/messages/${id}`, {
+            await fetch(`/api/admin/messages/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': 'Bearer ' + token }
             });
@@ -520,7 +529,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.deleteAdminCollab = async function(id) {
         if (confirm('Are you sure you want to delete this collaboration request?')) {
             const token = localStorage.getItem('nesf_admin_token');
-            await fetch(`http://localhost:3000/api/admin/collaborations/${id}`, {
+            await fetch(`/api/admin/collaborations/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': 'Bearer ' + token }
             });
